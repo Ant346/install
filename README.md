@@ -1,95 +1,95 @@
-# 一键安装(忘记要Star了，点了再走哦~)
+# One-click installation (forgot to ask for Star, click before leaving~)
 
-> ### 大家想要的工具可以在[心愿清单](https://github.com/fishros/install/issues/2)中提出,说不定会有魔法师满足你的心愿
+>### The tools you want can be found in [Wish List] (https://github.com/fishros/install/issues/2 ) Proposed in, maybe there will be a magician to fulfill your wish
 
-## 工具列表
+## Tool list
 
-已支持工具列表：
+List of supported tools：
 
-- 一键安装:ROS(支持ROS和ROS2,树莓派Jetson)  [贡献@小鱼](https://github.com/fishros)
-- 一键安装:VsCode(支持amd64和arm64)  [贡献@小鱼](https://github.com/fishros)
-- 一键安装:github桌面版(小鱼常用的github客户端)  [贡献@小鱼](https://github.com/fishros)
-- 一键安装:nodejs开发环境(通过nodejs可以预览小鱼官网噢  [贡献@小鱼](https://github.com/fishros)
-- 一键配置:rosdep(小鱼的rosdepc,又快又好用)  [贡献@小鱼](https://github.com/fishros)
-- 一键配置:ROS环境(快速更新ROS环境设置,自动生成环境选择)  [贡献@小鱼](https://github.com/fishros)
-- 一键配置:系统源(更换系统源,支持全版本Ubuntu系统)  [贡献@小鱼](https://github.com/fishros)
-- 一键安装:Docker(支持amd64和arm64)  [贡献@alyssa](https://github.com/alyssa1024)
-- 一键安装:cartographer 贡献 [@小鱼](https://github.com/fishros) & [@Catalpa](https://github.com/Y-zi)
-- 一键安装:微信客户端  [贡献@小鱼](https://github.com/fishros)
+-One-click installation: ROS (support ROS and ROS2, Raspberry Pi Jetson) [contribution@Xiaoyu] (https://github.com/fishros )
+-One-click installation: VSCode (supports amd64 and arm64) [contribution@Xiaoyu] (https://github.com/fishros )
+-One-click installation: github desktop version (Xiaoyu's commonly used github client) [contribute @Xiaoyu] (https://github.com/fishros )
+-One-click installation: nodejs development environment (you can preview Xiaoyu's official website through nodejs) [contribution@Xiaoyu] (https://github.com/fishros )
+-One-click configuration: rosdep (Xiaoyu's rosdepc, fast and easy to use) [contribution @Xiaoyu] (https://github.com/fishros )
+-One-click configuration: ROS environment (quickly update ROS environment settings, automatically generate environment selection) [Contribution@Xiaoyu] (https://github.com/fishros )
+-One-click configuration: system source (replace the system source, support the full version of Ubuntu system) [Contribution @Xiaoyu] (https://github.com/fishros )
+-One-click installation: Docker (supports amd64 and arm64) [contribution @alyssa] (https://github.com/alyssa1024 )
+-One-click installation: cartographer contribution [@Xiaoyu] (https://github.com/fishros ) & [@Catalpa](https://github.com/Y-zi )
+-One-click installation: WeChat client [contribution@Xiaoyu] (https://github.com/fishros )
 
 
 
-## 使用方法
+## How to use
 ```
 wget http://fishros.com/install -O fishros && . fishros
 ```
 
-## 如何自动选择(Dockerfile中使用)
+## How to automatically select (used in Dockerfile)
 
-目前一键安装支持从配置文件自动输入选项，你需要手动运行一次一键安装，使用完毕后会自动产生 `/tmp/fish_install.yaml`。
+Currently, one-click installation supports automatic input options from the configuration file. You need to manually run one-click installation at a time. After using it,`/tmp/fish_install.yaml`.
 
-使用下面的指令将配置文件拷贝到当前终端即可。
+Use the following command to copy the configuration file to the current terminal.
 
 ```
 cp /tmp/fish_install.yaml ./
 ```
 
-### Dockerfile中使用
+## Used in # Dockerfile
 
-使用样例如下
+Examples of use are as follows
 
 ```
 RUN apt update \ 
     && apt install wget python3-yaml -y  \
-    # 安装melodic
+    # Install melodic
     && echo "chooses:\n" > fish_install.yaml \
-    && echo "- {choose: 1, desc: '一键安装:ROS(支持ROS和ROS2,树莓派Jetson)'}\n" >> fish_install.yaml \
-    && echo "- {choose: 1, desc: 更换源继续安装}\n" >> fish_install.yaml \
-    && echo "- {choose: 2, desc: 清理三方源}\n" >> fish_install.yaml \
+    &&echo"-{choose: 1, desc:'one-click installation: ROS (support ROS and ROS2, Raspberry Pi Jetson)'}\n">>fish_install.yaml \
+    &&echo"-{choose: 1, desc: replace the source and continue the installation}\n">>fish_install.yaml \
+    && echo"-{choose: 2, desc: clean up the three sources}\n">> fish_install.yaml \
     && echo "- {choose: 1, desc: melodic(ROS1)}\n" >> fish_install.yaml \
-    && echo "- {choose: 1, desc: melodic(ROS1)桌面版}\n" >> fish_install.yaml \
+    &&echo"-{choose: 1, desc: melodic(ROS1) Desktop Version}\n">>fish_install.yaml \
     && wget http://fishros.com/install  -O fishros && /bin/bash fishros \
-    # 进行最后的清理
+    # Perform the final cleanup
     && rm -rf /var/lib/apt/lists/*  /tmp/* /var/tmp/* \
     && apt-get clean && apt autoclean 
 ```
-一键换源
+One-click source change
 
 ```
 FROM ubuntu:22.04
 
-# 一键换源
+# One-click source change
 RUN apt update \
     && apt install wget python3 python3-yaml -y python3-distro\
     && echo "chooses:\n" > fish_install.yaml \
-    && echo "- {choose: 5, desc: '一键安装:ROS(支持ROS和ROS2,树莓派Jetson)'}\n" >> fish_install.yaml \
-    && echo "- {choose: 2, desc: 更换源继续安装}\n" >> fish_install.yaml \
-    && echo "- {choose: 1, desc: 清理三方源}\n" >> fish_install.yaml \
+    &&echo"-{choose: 5, desc:'one-click installation: ROS (support ROS and ROS2, Raspberry Pi Jetson)'}\n">>fish_install.yaml \
+    &&echo"-{choose: 2, desc: replace the source and continue the installation}\n">>fish_install.yaml \
+    && echo"-{choose: 1, desc: clean up the three sources}\n">> fish_install.yaml \
     && wget http://fishros.com/install  -O fishros && /bin/bash fishros \
-    # 进行最后的清理
+    # Perform the final cleanup
     && rm -rf fish_install.yaml \
     && rm -rf /var/lib/apt/lists/*  /tmp/* /var/tmp/* \
     && apt-get clean && apt autoclean 
 ```
 
-## 贡献指南
+## Contribution Guide
 
-如果想把自己的常用安装程序变成一键安装程序，可以遵循下面的贡献指南。
+If you want to turn your common installation program into a one-click installation program, you can follow the contribution guide below.
 
-### 1.fork工程
+### 1.fork project
 
-fork工程到你的github,然后克隆工程到本地
+Fork the project to your github, then clone the project locally
 
-### 2.新建文件
+### 2.New file
 
-在本地的工程的tools目录下新建py文件
+Create a new py file in the tools directory of the local project
 
-- 若是安装工具命名为：tool_install_xxx.py
-- 若是配置工具为：tool_config_xxx.py
+-If the installation tool is named:tool_install_xxx.py
+- If the configuration tool is:tool_config_xxx.py
 
-### 3.编写程序
+### 3.Write a program
 
-拷贝模板到你新建的文件：
+Copy the template to your newly created file：
 
 ```
 # -*- coding: utf-8 -*-
@@ -101,42 +101,40 @@ from .base import run_tool_file
 class Tool(BaseTool):
     def __init__(self):
         self.type = BaseTool.TYPE_INSTALL
-        self.name = "模板工程"
-        self.author = '小鱼'
+        self.name = "Template Project"
+        self.author='Xiaoyu'
 
     def run(self):
-        #正式的运行
+        #Formal operation
         pass
 ```
 
-接着修改type、name、author
+Then modify the type, name, and author
 
-在run函数中编写逻辑，可以提供给你的工具有：
-1. PrintUtils 打印文字
-2. FileUtils 操作文件
-3. AptUtils 操作Apt
-4. ChooseTask 选择选项
-5. CmdTask 运行命令行工具
-6. run_tool_file 运行其他工具（需要在install.py的tools中配置dep）
+Write logic in the run function, the tools that can be provided to you are：
+1. PrintUtils print text
+2. FileUtils operation file
+3. AptUtils operation Apt
+4. ChooseTask selection options
+5. CmdTask runs the command line tool
+6. run_tool_file to run other tools (need to install.Configure dep in py's tools)
 
-信息：
-1. osversion 系统相关信息
-2. osarch 架构信息 amd64/i386/arm
+information：
+1. osversion system related information
+2. osarch architecture information amd64/i386/arm
 
-### 4.在install.py中tools中添加一条信息
+### 4.in install.Add a message to tools in py
 
-### 5.运行测试
-
-
-## 贡献名单
-
-- 一键安装ROS [小鱼](https://github.com/fishros)
-- 一键安装github-deskto [小鱼](https://github.com/fishros)
-- 一键配置rosdep [小鱼](https://github.com/fishros)
-- 一键配置ros环境 [小鱼](https://github.com/fishros)
-- 一键配置系统源 [小鱼](https://github.com/fishros)
-- 一键安装nodejs [小鱼](https://github.com/fishros)
-- 一键安装vscode [小鱼](https://github.com/fishros)
-- 一键安装:Docker(支持amd64和arm64) [@alyssa](https://github.com/alyssa1024)
+### 5.Run the test
 
 
+## Contribution list
+
+-One-click installation of ROS [Xiaoyu] (https://github.com/fishros )
+-One-click installation of github-deskto [Xiaoyu] (https://github.com/fishros )
+-One-click configuration of rosdep [Xiaoyu] (https://github.com/fishros )
+-One-click configuration of ros environment [Xiaoyu] (https://github.com/fishros )
+-One-click configuration of system source [Xiaoyu] (https://github.com/fishros )
+-One-click installation of nodejs [Xiaoyu] (https://github.com/fishros )
+-One-click installation of vscode [Xiaoyu] (https://github.com/fishros )
+-One-click installation: Docker (supports amd64 and arm64) [@alyssa] (https://github.com/alyssa1024 )
